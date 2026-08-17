@@ -18,7 +18,9 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/ubuntu
-            git clone https://github.com/tumhara-username/CI-CD.git || cd CI-CD && git pull
+            cd /home/ubuntu/CI-CD || git clone https://github.com/SPS9801/CI-CD.git
+            cd CI-CD
+            git pull origin main
+            cd securewebchat
             docker compose down
             docker compose up -d --build
