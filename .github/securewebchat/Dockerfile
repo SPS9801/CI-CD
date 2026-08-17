@@ -8,7 +8,7 @@ COPY package*.json ./
 RUN npm install
 
 # 3. सारा code copy करो
-COPY . .
+COPY . 
 
 EXPOSE 10000
 CMD ["node", "backend/server.js"]
