@@ -4,3 +4,20 @@ services:
     ports:
       - "10000:10000"
     restart: always
+    depends_on:
+      - redis
+    environment:
+      - PORT=10000
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - CORS_ORIGIN=*
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+volumes:
+  redis_data:
