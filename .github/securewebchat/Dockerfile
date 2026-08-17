@@ -1,22 +1,15 @@
-# Step 1: Build React/Vite Frontend
-FROM node:20 as frontend-build
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm install
-COPY frontend ./
-RUN npm run build
-
-# Step 2: Run Backend + Serve Frontend
-FROM node:20
+FROM node:20 AS build
 WORKDIR /app
 
-# Backend deps
-COPY package*.json ./
-RUN npm install
-COPY . .
+# backend की dependencies
+COPY backend/package*.json ./backend/
+RUN cd backend && npm install
 
-# Frontend build copy करो backend के public folder में
-COPY --from=frontend-build /app/frontend/dist ./public
+# backend का code copy
+COPY backend ./backend
+
+WORKDIR /app/backend
+RUN npm run build
 
 EXPOSE 10000
 CMD ["npm", "start"]
