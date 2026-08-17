@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,8 +20,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/CI-CD || git clone https://github.com/SPS9801/CI-CD.git
-            cd CI-CD
+            cd /home/ubuntu/CI-CD
             git pull origin main
-            cd securewebchat
+            cd /home/ubuntu/CI-CD/.github/securewebchat
             docker compose down
             docker compose up -d --build
