@@ -1,0 +1,36 @@
+{
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0"
+  },
+  "redis": {
+    "ttl": {
+      "room": 7200,
+      "session": 3600,
+      "message": 3600,
+      "media": 3600
+    }
+  },
+  "room": {
+    "maxUsers": 10,
+    "inactivityTimeout": 120,
+    "maxMessages": 200
+  },
+  "files": {
+    "maxSize": {
+      "image": 25,
+      "video": 250,
+      "document": 100,
+      "audio": 100
+    }
+  },
+  "rateLimit": {
+    "windowMs": 900000,
+    "max": 100
+  },
+  "security": {
+    "cors": {
+      "allowedOrigins": ["http://localhost:3000"]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB_CREDS = credentials('dockerhub')
+        IMAGE_NAME = "tumhara-dockerhub-name/securewebchat"
+        RENDER_HOOK = credentials('render-deploy-hook')
+    }
+    stages {
+        stage('Git Checkout') {
+            steps { git 'https://github.com/SPS9801/secure.git' }
+        }
+        stage('Docker Build') {
+            steps { bat 'docker build -t %IMAGE_NAME%:latest .' }
+        }
+        stage('Docker Push') {
+            steps {
+                bat 'echo %DOCKERHUB_CREDS_PSW% | docker login -u %DOCKERHUB_CREDS_USR% --password-stdin'
+                bat 'docker push %IMAGE_NAME%:latest'
+            }
+        }
+        stage('Deploy to Render') {
+            steps { bat 'curl -X POST %RENDER_HOOK%' }
+        }
+    }
+    post {
+        success { echo '✅ CI/CD Success! Render pe live ho gaya' }
+        failure { echo '❌ Build Failed' }
+    }
+}
