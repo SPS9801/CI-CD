@@ -2,7 +2,7 @@ services:
   app:
     build: .
     ports:
-      - "10000:10000"  # बाहर 10000, अंदर भी 10000
+      - "10000:10000"  
     restart: always
     env_file:
       - .env # अगर .env है तो
