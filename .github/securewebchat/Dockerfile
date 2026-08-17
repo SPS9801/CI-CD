@@ -1,14 +1,17 @@
-FROM node:20 AS build
+FROM node:20
 WORKDIR /app
 
 # backend की dependencies
 COPY backend/package*.json ./backend/
-RUN cd backend && npm install
+WORKDIR /app/backend
+RUN npm install
 
 # backend का code copy
+WORKDIR /app
 COPY backend ./backend
 
 WORKDIR /app/backend
+# अगर build script नहीं है तो ये लाइन हटा देना
 RUN npm run build
 
 EXPOSE 10000
